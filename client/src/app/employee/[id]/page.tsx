@@ -13,29 +13,74 @@ export default function EmployeeDetailPage() {
     skip: !id,
   });
 
-  if (loading) return <p className="p-4">Loading employee details...</p>;
-  if (error) return <p className="p-4 text-red-500">Error: {error.message}</p>;
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-gray-600 text-lg">Loading employee details...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-red-500 text-lg">Error: {error.message}</p>
+      </div>
+    );
 
   const employee = data?.getEmployeeDetails;
 
   if (!employee) {
-    return <p className="p-4 text-gray-500">Employee not found.</p>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-gray-500 text-lg">Employee not found.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="p-8 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Employee Details</h1>
+    <div className="min-h-screen bg-gray-50 py-12 px-6">
+      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-md p-8">
+        <h1 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-3">
+          Employee Details
+        </h1>
 
-      <div className="space-y-2 border rounded p-4 bg-gray-50">
-        <p><strong>Name:</strong> {employee.name}</p>
-        <p><strong>Position:</strong> {employee.position}</p>
-        <p><strong>Department:</strong> {employee.department}</p>
-        <p><strong>Salary:</strong> ₹{employee.salary}</p>
+        <div className="space-y-5">
+          <div className="flex justify-between items-center border-b pb-2">
+            <p className="text-gray-500 font-medium">Name</p>
+            <p className="text-gray-900 font-semibold">{employee.name}</p>
+          </div>
+
+          <div className="flex justify-between items-center border-b pb-2">
+            <p className="text-gray-500 font-medium">Position</p>
+            <p className="text-gray-900">{employee.position}</p>
+          </div>
+
+          <div className="flex justify-between items-center border-b pb-2">
+            <p className="text-gray-500 font-medium">Department</p>
+            <p className="text-gray-900">{employee.department}</p>
+          </div>
+
+          <div className="flex justify-between items-center border-b pb-2">
+            <p className="text-gray-500 font-medium">Salary</p>
+            <p className="text-green-700 font-semibold">
+              ₹{employee.salary.toLocaleString()}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-between items-center">
+          <Link
+            href="/"
+            className="text-green-700 hover:text-green-800 font-medium transition"
+          >
+            ← Back to Home
+          </Link>
+
+          <button className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+            Edit Employee
+          </button>
+        </div>
       </div>
-
-      <Link href="/" className="inline-block mt-4 text-blue-600 hover:underline">
-        ← Back to Home
-      </Link>
     </div>
   );
 }
